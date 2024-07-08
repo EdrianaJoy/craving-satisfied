@@ -31,14 +31,14 @@ router.get('/get-categories', function (req, res, next) {
 
 router.get('/get-sub-categories', function (req, res, next) {
   const category = req.query.category;
-  const categoryId = req.query.categoryId;
-  
+  const typeId = req.query.typeId;
+
   try {
     const tableName = getSubCategoryTableName(category);
-    const fk = getCategoryType(category);
+    const categoryTypeId = getCategoryType(category);
 
     debugger;
-    const query = `SELECT * FROM ${tableName} WHERE ${fk} = ${categoryId}`;
+    const query = `SELECT * FROM ${tableName} WHERE ${categoryTypeId} = ${typeId}`;
     console.log(`query: ${query}`)
     connection.query(query, (err, results) => {
       if (err) {
@@ -92,5 +92,130 @@ function getCategoryType(category) {
       throw new Error(`Unknown category: ${category}`);
   }
 }
+
+// Knapsack-Backtracking Algorithm with Constraint Propagation
+function knapsackBacktrackingOptimized(meals, budget, categories, currentSelection = [], index = 0, categorySet = new Set()) {
+  if (budget === 0 || index === meals.length) {
+    if (categories.every(category => categorySet.has(category))) {
+      return [currentSelection];
+    }
+    return [];
+  }
+
+  const item = meals[index];
+
+  if (item.amount > budget) {
+    return knapsackBacktrackingOptimized(meals, budget, categories, currentSelection, index + 1, categorySet);
+  }
+
+  const withCurrent = knapsackBacktrackingOptimized(
+    meals, budget - item.amount, categories,
+    currentSelection.concat(item), index + 1,
+    new Set([...categorySet, item.category])
+  );
+
+  const withoutCurrent = knapsackBacktrackingOptimized(meals, budget, categories, currentSelection, index + 1, categorySet);
+
+  return withCurrent.concat(withoutCurrent);
+}
+
+const fetchMeals = (callback) => {
+  const queries = {
+    ricemeal: 'SELECT id, name, amount, rice_meal_type_id AS type_id, rice_meal_sub_type_id AS sub_type_id, "ricemeal" AS category FROM ricemeal',
+    beverage: 'SELECT id, name, amount, beverage_type_id AS type_id, beverage_sub_type_id AS sub_type_id, "beverage" AS category FROM beverage',
+    snack: 'SELECT id, name, amount, snack_type_id AS type_id, snack_sub_type_id AS sub_type_id, "snack" AS category FROM snack'
+  };
+
+  const results = {};
+  let completed = 0;
+  const totalQueries = Object.keys(queries).length;
+
+  Object.entries(queries).forEach(([key, query]) => {
+    connection.query(query, (err, rows) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      results[key] = rows;
+      completed++;
+      if (completed === totalQueries) {
+        const allMeals = [...results.ricemeal, ...results.beverage, ...results.snack];
+        callback(null, allMeals);
+      }
+    });
+  });
+};
+
+// Knapsack-Backtracking Algorithm with Constraint Propagation
+function knapsackBacktrackingOptimized(meals, budget, categories, currentSelection = [], index = 0, categorySet = new Set()) {
+  if (budget === 0 || index === meals.length) {
+    if (categories.every(category => categorySet.has(category))) {
+      return [currentSelection];
+    }
+    return [];
+  }
+
+  const item = meals[index];
+
+  if (item.amount > budget) {
+    return knapsackBacktrackingOptimized(meals, budget, categories, currentSelection, index + 1, categorySet);
+  }
+
+  const withCurrent = knapsackBacktrackingOptimized(
+    meals, budget - item.amount, categories,
+    currentSelection.concat(item), index + 1,
+    new Set([...categorySet, item.category])
+  );
+
+  const withoutCurrent = knapsackBacktrackingOptimized(meals, budget, categories, currentSelection, index + 1, categorySet);
+
+  return withCurrent.concat(withoutCurrent);
+}
+
+router.post('/get-meals', (req, res) => {
+  const { budget, categories } = req.body;
+
+  if (!budget || !categories) {
+    return res.status(400).json({ error: 'Invalid input data' });
+  }
+
+  fetchMeals((err, mealOptions) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error fetching data from the database' });
+    }
+
+    const selectedCategories = categories.map(category => category.categoryName)
+      const type1 = categories[0].type;
+      const subType1 = categories[1].subType;
+      const type2 = categories[1].type;
+      const subType2 = categories[1].subType;
+
+      const filteredMeals = mealOptions.filter(option => {
+        const categoryMatch = selectedCategories.includes(option.category);
+
+        console.log('optiooooon', option)
+
+        const typeMatch = (option.category === categories[0] && option.type_id === type1) || (option.category === categories[1] && option.type_id === type2);
+        const subTypeMatch = (option.category === categories[0] && option.sub_type_id === subType1) || (option.category === categories[1] && (option.sub_type_id === subType2 || subType2 === null));
+
+        return categoryMatch && typeMatch && subTypeMatch;
+      });
+
+      const foodCombinations = knapsackBacktrackingOptimized(filteredMeals, budget, selectedCategories);
+
+      const maxResults = 5;
+      const limitedResults = foodCombinations.slice(0, maxResults);
+
+      const numberedCombinations = limitedResults.map((combination, index) => {
+        const totalAmount = combination.reduce((sum, item) => sum + item.amount, 0);
+        return {
+          [`Combination ${index + 1}`]: combination,
+          "Total Amount": `P${totalAmount.toFixed(2)}`
+        };
+      });
+
+      res.json({ 'Food combinations': numberedCombinations });
+  });
+});
 
 module.exports = router;

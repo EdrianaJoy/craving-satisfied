@@ -1,31 +1,42 @@
+
+
+let categoryForm = {
+    categoryName: null,
+    type: null,
+    subType: null
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const selectedCategories = new Set();
     const buttons = document.querySelectorAll('.btn.btn-brand');
+    const selectedCategories = new Map();
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.id;
+            console.log('category: ' + category)
             if (selectedCategories.has(category)) {
                 selectedCategories.delete(category);
                 button.classList.remove('btn-selected');
             } else {
                 if (selectedCategories.size < 2) {
-                    selectedCategories.add(category);
+                    console.log(selectedCategories.size)
+                    selectedCategories.set(category, null);
                     button.classList.add('btn-selected');
                 } else {
                     alert('You can only select two categories. Click a button to unselect.');
                     return;
                 }
             }
-            updateSelectedSection();
+
+            getCategoryTypes();
         });
     });
 
 
-    function updateSelectedSection() {
+    function getCategoryTypes() {
         const selectedSection = document.getElementById('selected-section');
         selectedSection.innerHTML = '';
-        selectedCategories.forEach(category => {
+        selectedCategories.forEach((value, category) => {
             const sectionWrapper = document.createElement('div');
             sectionWrapper.classList.add('category-section');
             sectionWrapper.innerHTML = `
@@ -48,14 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return response.json();
                 }).then(data => {
-                    console.log(`${category} types: `, data);
 
-                    data.forEach(option => {
+                    data.forEach(type => {
                         const button = document.createElement('button');
                         button.classList.add('btn', 'btn-option');
-                        button.id = `${category}-${option.id}`;
-                        button.textContent = option.name;
-                        button.onclick = () => updateOptions(category, option);
+                        button.id = `${category}-${type.id}`;
+                        button.textContent = type.name;
+                        button.onclick = () => getCategorySubTypes(category, type);
                         area.appendChild(button);
                     })
                 }).catch(error => {
@@ -79,50 +89,64 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonContainer.appendChild(submitButton);
     }
 
-    function updateOptions(category, subCategory) {
-        console.log(category, subCategory.id, subCategory.name)
+    function getCategorySubTypes(category, type) {
+
         const subcategoryArea = document.getElementById(`${category}-sub-area`);
         subcategoryArea.innerHTML = '';
 
         const buttons = document.querySelectorAll(`#${category}-area .btn-option`);
         buttons.forEach(button => button.classList.remove('btn-c-selected'));
-        document.getElementById(`${category}-${subCategory.id}`).classList.add('btn-c-selected');
+        document.getElementById(`${category}-${type.id}`).classList.add('btn-c-selected');
 
 
-        fetch(`/select/get-sub-categories?category=${category}&categoryId=${subCategory.id}`)
+        fetch(`/select/get-sub-categories?category=${category}&typeId=${type.id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch ${category} sub-categories`);
                 }
                 return response.json();
             }).then(data => {
-                console.log(`${category} sub-categories: `, data);
                 // Update UI with fetched sub-categories data
                 if (data.length > 0) {
                     const label = document.createElement('p');
                     label.classList.add('subcategory-label');
-                    label.textContent = `Select your preferences for ${subCategory.name}:`;
+                    label.textContent = `Select your preferences for ${type.name}:`;
                     subcategoryArea.appendChild(label);
 
-                    data.forEach(subOption => {
+                    data.forEach(subType => {
                         const button = document.createElement('button');
                         button.classList.add('btn', 'btn-sub-option');
-                        button.textContent = subOption.name.split('-')[1];
+                        button.textContent = subType.name.split('-')[1];
+                        button.id = subType.id
 
                         button.onclick = () => {
                             const subButtons = document.querySelectorAll(`#${category}-sub-area .btn-sub-option`);
                             subButtons.forEach(subBtn => subBtn.classList.remove('btn-sub-selected'));
                             button.classList.add('btn-sub-selected');
+                            categoryForm = {
+                                categoryName: category,
+                                type: type.id,
+                                subType: button.id
+                            }
+                            selectedCategories.set(category, categoryForm);
+                            console.log('damassh', selectedCategories);
+
                         };
                         subcategoryArea.appendChild(button);
                     })
                 } else {
+                    categoryForm = {
+                        categoryName: category,
+                        type: type.id,
+                        subType: null
+                    }
+                    selectedCategories.set(category, categoryForm);
                     const noSubcategoriesMsg = document.createElement('p');
                     noSubcategoriesMsg.classList.add('no-subcategories');
-                    noSubcategoriesMsg.textContent = `No further selection available for ${subCategory.name}.`;
+                    noSubcategoriesMsg.textContent = `No further selection available for ${type.name}.`;
                     subcategoryArea.appendChild(noSubcategoriesMsg);
-                }
 
+                }
             })
             .catch(error => {
                 console.error(`Error fetching ${category} sub-categories: `, error);
@@ -130,8 +154,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleFormSubmission() {
-        // Add your form submission logic here
         console.log('Form submitted!');
+        const budget = document.getElementById('budget').value;
+
+        const categories = [];
+        selectedCategories.forEach((value, category) => {
+            categories.push(value);
+        });
+
+        console.log('selectedCategories', categories);
+        const form = {
+            budget: budget,
+            categories: categories
+        }
+
+        fetch('/select/get-meals', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form)
+        }).then(data => {
+            console.log(data)
+        }).catch(error => {
+            console.error('Error', error)
+            alert(error);
+        });
+
     }
 });
 
