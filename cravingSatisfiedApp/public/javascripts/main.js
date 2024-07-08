@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.forEach(subOption => {
                         const button = document.createElement('button');
                         button.classList.add('btn', 'btn-sub-option');
-                        button.textContent = subOption.name;
+                        button.textContent = subOption.name.split('-')[1];
 
                         button.onclick = () => {
                             const subButtons = document.querySelectorAll(`#${category}-sub-area .btn-sub-option`);
