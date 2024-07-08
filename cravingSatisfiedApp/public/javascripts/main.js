@@ -33,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectedCategories.add(category);
                     button.classList.add('btn-selected');
                 } else {
-                    alert('You can only select two categories. Click button to unselect.');
+                    alert('You can only select two categories. Click a button to unselect.');
                     return;
                 }
             }
             updateSelectedSection();
         });
     });
+
 
     function updateSelectedSection() {
         const selectedSection = document.getElementById('selected-section');
@@ -60,14 +61,27 @@ document.addEventListener('DOMContentLoaded', () => {
             label.textContent = '';
             area.appendChild(label);
 
-            Object.keys(data[category.replace('-', '_')]).forEach(option => {
-                const button = document.createElement('button');
-                button.classList.add('btn', 'btn-option');
-                button.id = `${category}-${option}`;
-                button.textContent = option;
-                button.onclick = () => updateOptions(`${category}-${option}`, category);
-                area.appendChild(button);
-            });
+            fetch(`/select/get-categories?category=${category}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch ${category} categories`);
+                    }
+                    return response.json();
+                }).then(data => {
+                    console.log(`${category} types: `, data);
+
+                    data.forEach(option => {
+                        const button = document.createElement('button');
+                        button.classList.add('btn', 'btn-option');
+                        button.id = `${category}-${option.id}`;
+                        button.textContent = option.name;
+                        button.onclick = () => updateOptions(category, option);
+                        area.appendChild(button);
+                    })
+                }).catch(error => {
+                    console.log('Error fetching ', category, ' types: ', error);
+                })
+
         });
 
         // Add the submit button after generating the content
@@ -76,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addSubmitButton() {
         const buttonContainer = document.querySelector('.button-container1');
-        buttonContainer.innerHTML = ''; 
+        buttonContainer.innerHTML = '';
 
         const submitButton = document.createElement('button');
         submitButton.classList.add('submit-btn');
@@ -85,50 +99,66 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonContainer.appendChild(submitButton);
     }
 
-    function updateOptions(optionId, category) {
+    function updateOptions(category, subCategory) {
+        console.log(category, subCategory.id, subCategory.name)
         const subcategoryArea = document.getElementById(`${category}-sub-area`);
         subcategoryArea.innerHTML = '';
-        const selectedOption = optionId.split('-')[1];
-        const buttons = document.querySelectorAll(`#${category}-area .btn-option`);
-    
-        buttons.forEach(button => button.classList.remove('btn-c-selected'));
-                document.getElementById(optionId).classList.add('btn-c-selected');
-        
-        if (data[category][selectedOption] && data[category][selectedOption].length > 0) {
-            const label = document.createElement('p');
-            label.classList.add('subcategory-label');
-            label.textContent = `Select your preferences for ${selectedOption}:`;
-            subcategoryArea.appendChild(label);
 
-            data[category][selectedOption].forEach(subOption => {
-                const button = document.createElement('button');
-                button.classList.add('btn', 'btn-sub-option');
-                button.textContent = subOption;
-                button.onclick = () => {
-                    const subButtons = document.querySelectorAll(`#${category}-sub-area .btn-sub-option`);
-                    subButtons.forEach(subBtn => subBtn.classList.remove('btn-sub-selected'));
-                    button.classList.add('btn-sub-selected');
-                    updateSubcategoryDisplay(category, selectedOption, subOption);
-                };
-                subcategoryArea.appendChild(button);
+        const buttons = document.querySelectorAll(`#${category}-area .btn-option`);
+        buttons.forEach(button => button.classList.remove('btn-c-selected'));
+        document.getElementById(`${category}-${subCategory.id}`).classList.add('btn-c-selected');
+
+
+        fetch(`/select/get-sub-categories?category=${category}&categoryId=${subCategory.id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch ${category} sub-categories`);
+                }
+                return response.json();
+            }).then(data => {
+                console.log(`${category} sub-categories: `, data);
+                // Update UI with fetched sub-categories data
+                if (data.length > 0) {
+                    const label = document.createElement('p');
+                    label.classList.add('subcategory-label');
+                    label.textContent = `Select your preferences for ${subCategory.name}:`;
+                    subcategoryArea.appendChild(label);
+
+                    data.forEach(subOption => {
+                        const button = document.createElement('button');
+                        button.classList.add('btn', 'btn-sub-option');
+                        button.textContent = subOption.name;
+
+                        button.onclick = () => {
+                            const subButtons = document.querySelectorAll(`#${category}-sub-area .btn-sub-option`);
+                            subButtons.forEach(subBtn => subBtn.classList.remove('btn-sub-selected'));
+                            button.classList.add('btn-sub-selected');
+                            // updateSubcategoryDisplay(category, subCategory.name, subOption);
+                        };
+                        subcategoryArea.appendChild(button);
+                    })
+                } else {
+                    const noSubcategoriesMsg = document.createElement('p');
+                    noSubcategoriesMsg.classList.add('no-subcategories');
+                    noSubcategoriesMsg.textContent = `No further selection available for ${subCategory.name}.`;
+                    subcategoryArea.appendChild(noSubcategoriesMsg);
+                }
+
+            })
+            .catch(error => {
+                console.error(`Error fetching ${category} sub-categories: `, error);
             });
-        } else {
-            const noSubcategoriesMsg = document.createElement('p');
-            noSubcategoriesMsg.classList.add('no-subcategories');
-            noSubcategoriesMsg.textContent = `No further selection available for ${selectedOption}.`;
-            subcategoryArea.appendChild(noSubcategoriesMsg);
-        }
     }
 
     function updateSubcategoryDisplay(category, option, subOption) {
         const subcategoryDisplay = document.getElementById('subcategory-display');
-        const existingItem = document.getElementById(`${category}-${option}-${subOption}`);
+        const existingItem = document.getElementById(`${category}-${option.id}-${subOption.id}`);
         if (existingItem) {
             existingItem.remove();
         } else {
             const item = document.createElement('div');
-            item.id = `${category}-${option}-${subOption}`;
-            item.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} - ${option} - ${subOption}`;
+            item.id = `${category}-${optionid}-${subOption.id}`;
+            item.textContent = subOption.name;
             subcategoryDisplay.appendChild(item);
         }
     }
@@ -139,13 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     const buttons = $('.buttonselect button');
-
-    buttons.click(function() {
-        buttons.removeClass('btn-selected');
-        $(this).addClass('btn-selected');
-    });
 
     // Smooth scroll function
     function scrollToSection(sectionId) {
@@ -162,9 +187,9 @@ $(document).ready(function() {
         }
     }
 
-    $('.scroll-to-section').click(function(e) {
+    $('.scroll-to-section').click(function (e) {
         e.preventDefault();
-        const sectionId = $(this).attr('href').substr(1); 
+        const sectionId = $(this).attr('href').substr(1);
         scrollToSection(sectionId);
     });
 });
