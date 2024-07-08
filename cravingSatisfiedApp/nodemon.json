@@ -1,0 +1,7 @@
+{
+    "watch": ["routes"],
+    "ext": "js,json",
+    "ignore": ["node_modules"],
+    "exec": "node ./bin/www"
+  }
+  
