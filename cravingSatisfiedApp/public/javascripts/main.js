@@ -113,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             const subButtons = document.querySelectorAll(`#${category}-sub-area .btn-sub-option`);
                             subButtons.forEach(subBtn => subBtn.classList.remove('btn-sub-selected'));
                             button.classList.add('btn-sub-selected');
-                            // updateSubcategoryDisplay(category, subCategory.name, subOption);
                         };
                         subcategoryArea.appendChild(button);
                     })
@@ -128,19 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error(`Error fetching ${category} sub-categories: `, error);
             });
-    }
-
-    function updateSubcategoryDisplay(category, option, subOption) {
-        const subcategoryDisplay = document.getElementById('subcategory-display');
-        const existingItem = document.getElementById(`${category}-${option.id}-${subOption.id}`);
-        if (existingItem) {
-            existingItem.remove();
-        } else {
-            const item = document.createElement('div');
-            item.id = `${category}-${optionid}-${subOption.id}`;
-            item.textContent = subOption.name;
-            subcategoryDisplay.appendChild(item);
-        }
     }
 
     function handleFormSubmission() {
