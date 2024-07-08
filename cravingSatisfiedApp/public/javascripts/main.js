@@ -1,26 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const selectedCategories = new Set();
     const buttons = document.querySelectorAll('.btn.btn-brand');
-    const data = {
-        ricemeals: {
-            Pork: ['Fried', 'Steamed', 'Soup'],
-            Beef: ['Fried', 'Steamed', 'Soup'],
-            Chicken: ['Fried', 'Steamed', 'Soup'],
-            Vegetables: ['Fried', 'Steamed', 'Soup']
-        },
-        beverages: {
-            Coffee: ['Hot', 'Iced'],
-            Juice: ['Tea', 'Lemonade', 'Fruit'],
-            MilkTea: [],
-            Shakes: ['Fruit', 'Others'],
-            Water: []
-        },
-        snacks: {
-            Streetfood: [],
-            Pasta: ['Noodles', 'Western Pasta', 'Pancit'],
-            Bread: ['Sandwich', 'Sweets']
-        }
-    };
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
