@@ -1,5 +1,6 @@
--- CREATE DATABASE cravings_2;
-use cravings_2;
+DROP DATABASE IF EXISTS cravings;
+CREATE DATABASE cravings;
+use cravings;
 
 -- DROP TABLES // Drop the Main Table first then the subtype then the type
 DROP TABLE IF EXISTS Beverage;

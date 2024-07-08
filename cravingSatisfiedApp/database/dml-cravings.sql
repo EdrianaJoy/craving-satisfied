@@ -1,4 +1,4 @@
-USE cravings_2;
+USE cravings;
 
 -- BeverageType
 INSERT INTO  BeverageType (name) VALUES ('Coffee');
