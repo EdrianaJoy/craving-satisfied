@@ -1,260 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Include jQuery -->
-    <script src="/jquery/dist/jquery.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheets/style.css">
-  </head>
-  <body>
-    <!--NAVBAR-->
-    <nav class="navbar navbar-expand-lg sticky-top bg-custom">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img class="logo2" src="images/Group 8.png" alt="" />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#land" onclick="scrollToSection('land')"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#food-menu"
-                onclick="scrollToSection('food-menu')"
-                >Menu</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#about"
-                onclick="scrollToSection('about')"
-                >About</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#algorithm"
-                onclick="scrollToSection('algorithm')"
-                >Algorithm</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <!-- Include jQuery -->
+  <script src="/jquery/dist/jquery.min.js"></script>
 
-    <!--LANDING PAGE-->
-    <section id="land" class="d-flex justify-content-center">
-      <div class="container text-center">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="container">
-              <div class="image-container">
-                <img
-                  src="images/Group 21.png"
-                  alt="Image"
-                  class="img-fluid"
-                />
-              </div>
-            </div>
-            <div
-              class="d-flex align-items-center justify-content-center unselectable"
-            >
-              <h1 class="fw-bold display-1 mt-4 crave">Cravings</h1>
-              <h1 class="fw-bold display-1 mt-4 satisfy">Satisfied</h1>
-            </div>
-            <h6 class="text-white mt-4 unselectable">
-              Enjoy a variety of food choices at PUP-Lagoon without breaking the
-              bank.
-            </h6>
-            <div class="mt-4">
-              <h1 class="eat unselectable">
-                <span style="color: #d23140">EAT</span>
-                <span style="color: #fff6f6">Well</span>
-              </h1>
-              <h1 class="spend unselectable">
-                <span style="color: #f1e423">SPEND</span>
-                <span style="color: #fff6f6">Wisely</span>
-              </h1>
-            </div>
-            <div class="mt-4">
-              <a href="select.html" class="btn btn-brand me-2">Get Started</a>
-              <a href="#about" class="btn btn-brand ms-2">About</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="stylesheets/style.css" />
+</head>
 
-    <!--MENU-->
-    <section id="food-menu" class="menu-section user-select-none">
-      <div class="container">
-        <h2 class="menu-title">Food Categories</h2>
-        <div class="menu-items">
-          <div class="menu-item rice">
-            <img src="images/Group 13.png" alt="Rice Meals" />
-            <p class="rm">Rice Meals</p>
-          </div>
-          <div class="menu-item drinks">
-            <img src="images/Group 14.png" alt="Beverages" />
-            <p class="dr">Beverages</p>
-          </div>
-          <div class="menu-item snacks">
-            <img src="images/Group 15.png" alt="Snacks" />
-            <p class="sn">Snacks</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<body>
+  <!--NAVBAR-->
+  <%- include('partials/navbar.ejs') %>
 
-    <!--ABOUT-->
-    <div id="about" class="about-section unselectable">
+  <!--LANDING PAGE-->
+  <section id="land" class="d-flex justify-content-center">
+    <div class="container text-center">
       <div class="row">
-        <h2>About the Website</h2>
-        <div class="col about-image">
-            <img src="images/Group 23.png" alt="About Us" />
+        <div class="col-md-12">
+          <div class="container">
+            <div class="image-container">
+              <img src="images/Group 21.png" alt="Image" class="img-fluid" />
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-center unselectable">
+            <h1 class="fw-bold display-1 mt-4 crave">Cravings</h1>
+            <h1 class="fw-bold display-1 mt-4 satisfy">Satisfied</h1>
+          </div>
+          <h6 class="text-white mt-4 unselectable">
+            Enjoy a variety of food choices at PUP-Lagoon without breaking the
+            bank.
+          </h6>
+          <div class="mt-4">
+            <h1 class="eat unselectable">
+              <span style="color: #d23140">EAT</span>
+              <span style="color: #fff6f6">Well</span>
+            </h1>
+            <h1 class="spend unselectable">
+              <span style="color: #f1e423">SPEND</span>
+              <span style="color: #fff6f6">Wisely</span>
+            </h1>
+          </div>
+          <div class="mt-4">
+            <form action="/select" method="GET">
+              <button type="submit" class="btn btn-brand me-2">Get Started</button>
+              <a href="#about" class="btn btn-brand ms-2">About</a>
+            </form>
+            
+          </div>
         </div>
-        <div class="col about-text">
+      </div>
+    </div>
+  </section>
+
+  <!--MENU-->
+  <section id="food-menu" class="menu-section user-select-none">
+    <div class="container">
+      <h2 class="menu-title">Food Categories</h2>
+      <div class="menu-items">
+        <div class="menu-item rice">
+          <img src="images/Group 13.png" alt="Rice Meals" />
+          <p class="rm">Rice Meals</p>
+        </div>
+        <div class="menu-item drinks">
+          <img src="images/Group 14.png" alt="Beverages" />
+          <p class="dr">Beverages</p>
+        </div>
+        <div class="menu-item snacks">
+          <img src="images/Group 15.png" alt="Snacks" />
+          <p class="sn">Snacks</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--ABOUT-->
+  <div id="about" class="about-section unselectable">
+    <div class="row">
+      <h2>About the Website</h2>
+      <div class="col about-image">
+        <img src="images/Group 23.png" alt="About Us" />
+      </div>
+      <div class="col about-text">
+        <p>
+          The PUP Lagoon Food Court offers a vibrant selection of delicious
+          and budget-friendly meals to fuel your busy days at Polytechnic
+          University of the Philippines. Whether you're craving Filipino
+          favorites, refreshing snacks, or something in between, our diverse
+          range of vendors caters to every taste and keeps your wallet happy.
+          <br />
+          <br />
+          This website is a student project designed to help you explore the
+          delicious and affordable food options at PUP Lagoon Food Court. It
+          was created in partial fulfillment of the requirements for a Design
+          and Analysis of Algorithms course.
+          <br />
+          <br />
+          Our goal is to provide a user-friendly platform that leverages the
+          power of algorithms to streamline your food selection experience at
+          PUP Lagoon.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!--Algorithm-->
+  <div id="algorithm" class="algorithm-section unselectable">
+    <h2>Algorithm</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="algorithm-text">
+          <h3>Knapsack Backtracking in Action:</h3>
           <p>
-            The PUP Lagoon Food Court offers a vibrant selection of delicious
-            and budget-friendly meals to fuel your busy days at Polytechnic
-            University of the Philippines. Whether you're craving Filipino
-            favorites, refreshing snacks, or something in between, our diverse
-            range of vendors caters to every taste and keeps your wallet happy.
-            <br />
-            <br />
-            This website is a student project designed to help you explore the
-            delicious and affordable food options at PUP Lagoon Food Court. It
-            was created in partial fulfillment of the requirements for a Design
-            and Analysis of Algorithms course.
-            <br />
-            <br />
-            Our goal is to provide a user-friendly platform that leverages the
-            power of algorithms to streamline your food selection experience at
-            PUP Lagoon.
+            Imagine a knapsack (a backpack) with limited space, representing
+            your budget or dietary restrictions. The algorithm treats each
+            food item as an object with a weight (price) and a value
+            (satisfaction). The Knapsack Backtracking method explores all
+            possible combinations of food items, aiming to fill your knapsack
+            (maximize your satisfaction) while staying within your constraints
+            (budget or restrictions).
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="algorithm-text">
+          <h3>Constraint Propagation for Optimization:</h3>
+          <p>
+            To further optimize the search process, we incorporate Constraint
+            Propagation. This technique identifies and eliminates irrelevant
+            food combinations early on, focusing the search on options that
+            meet your needs. By filtering out unsuitable choices, constraint
+            propagation ensures the algorithm finds the most fitting
+            combinations quickly and efficiently.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="algorithm-text">
+          <h3>The Result: A Streamlined Food Selection Experience</h3>
+          <p>
+            Thanks to the Knapsack Backtracking algorithm and Constraint
+            Propagation, our website can efficiently present you with a
+            diverse range of food options that align with your preferences and
+            budget. So, browse our menu with confidence, knowing that powerful
+            algorithms are working behind the scenes to deliver a delightful
+            dining experience.
           </p>
         </div>
       </div>
     </div>
-    <!--Algorithm-->
-    <div id="algorithm" class="algorithm-section unselectable">
-      <h2>Algorithm</h2>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="algorithm-text">
-            <h3>Knapsack Backtracking in Action:</h3>
-            <p>
-              Imagine a knapsack (a backpack) with limited space, representing
-              your budget or dietary restrictions. The algorithm treats each
-              food item as an object with a weight (price) and a value
-              (satisfaction). The Knapsack Backtracking method explores all
-              possible combinations of food items, aiming to fill your knapsack
-              (maximize your satisfaction) while staying within your constraints
-              (budget or restrictions).
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="algorithm-text">
-            <h3>Constraint Propagation for Optimization:</h3>
-            <p>
-              To further optimize the search process, we incorporate Constraint
-              Propagation. This technique identifies and eliminates irrelevant
-              food combinations early on, focusing the search on options that
-              meet your needs. By filtering out unsuitable choices, constraint
-              propagation ensures the algorithm finds the most fitting
-              combinations quickly and efficiently.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="algorithm-text">
-            <h3>The Result: A Streamlined Food Selection Experience</h3>
-            <p>
-              Thanks to the Knapsack Backtracking algorithm and Constraint
-              Propagation, our website can efficiently present you with a
-              diverse range of food options that align with your preferences and
-              budget. So, browse our menu with confidence, knowing that powerful
-              algorithms are working behind the scenes to deliver a delightful
-              dining experience.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--FOOTER-->
-    <section id="footer" class="foot">
-      <div class="container">
-        <footer class="py-3 my-4">
-          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item">
-              <a class="nav-link" href="#land" onclick="scrollToSection('land')"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#food-menu"
-                onclick="scrollToSection('food-menu')"
-                >Menu</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#about"
-                onclick="scrollToSection('about')"
-                >About</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#algorithm"
-                onclick="scrollToSection('algorithm')"
-                >Algorithm</a
-              >
-            </li>
-          </ul>
-          <div class="footer-logo">
-            <img src="images\Group 9.png" alt="footer-logo" />
-          </div>
-          <p class="text-center">© 2024 DAMASO MIGUEH SANAO</p>
-        </footer>
-      </div>
-    </section>
+  </div>
+  <!--FOOTER-->
+  <%- include('partials/footer.ejs') %>
 
-    <script src="javascripts/main.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <script src="javascripts/main.js"></script>
+</body>
+
 </html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Cravings Satisfied</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Include jQuery -->
+  <script src="/jquery/dist/jquery.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="stylesheets/style.css" />
+
+
+</head>
+
+<body>
+  <!--NAVBAR-->
+  <%- include('partials/navbar.ejs') %>
+
+  <!--BREADCRUMB-->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb d-flex justify-content-start">
+      <li class="breadcrumb-item align-first"><a href="main.html">Home</a></li>
+      <li class="breadcrumb-item align-first"><a href="select.html">Select</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Results</li>
+    </ol>
+  </nav>
+
+  <!--Results-->
+  <section id="result" class="result">
+    <div class="container">
+      <h2>Results</h2>
+
+
+      <div class="button-container">
+        <button class="btn btn-brand">Home</button>
+        <button class="btn btn-brand">Try Again</button>
+      </div>
+    </div>
+  </section>
+
+  <!--FOOTER-->
+  <!--FOOTER-->
+  <%- include('partials/footer.ejs') %>
+
+  <script src="assets\js\main.js"></script>
+</body>
+
+</html>
