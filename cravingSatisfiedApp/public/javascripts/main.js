@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             categoryForm = {
                                 categoryName: category,
                                 type: type.id,
-                                subType: button.id
+                                subType: parseInt(button.id)
                             }
                             selectedCategories.set(category, categoryForm);
                             console.log('damassh', selectedCategories);
