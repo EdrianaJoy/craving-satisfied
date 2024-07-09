@@ -184,37 +184,41 @@ router.post('/get-meals', (req, res) => {
       return res.status(500).json({ error: 'Error fetching data from the database' });
     }
 
+    console.log(categories);
+
     const selectedCategories = categories.map(category => category.categoryName)
-      const type1 = categories[0].type;
-      const subType1 = categories[1].subType;
-      const type2 = categories[1].type;
-      const subType2 = categories[1].subType;
+    const type1 = categories[0].type;
+    const subType1 = categories[0].subType;
+    const type2 = categories[1].type;
+    const subType2 = categories[1].subType;
 
-      const filteredMeals = mealOptions.filter(option => {
-        const categoryMatch = selectedCategories.includes(option.category);
+    console.log(type1)
+    console.log(subType1)
+    console.log(type2)
+    console.log(subType2)
 
-        console.log('optiooooon', option)
+    const filteredMeals = mealOptions.filter(option => {
+      const categoryMatch = selectedCategories.includes(option.category);
+      const typeMatch = (option.category === categories[0] && option.type_id === type1) || (option.category === categories[1] && option.type_id === type2);
+      const subTypeMatch = (option.category === categories[0] && option.sub_type_id === subType1) || (option.category === categories[1] && (option.sub_type_id === subType2 || subType2 === null));
 
-        const typeMatch = (option.category === categories[0] && option.type_id === type1) || (option.category === categories[1] && option.type_id === type2);
-        const subTypeMatch = (option.category === categories[0] && option.sub_type_id === subType1) || (option.category === categories[1] && (option.sub_type_id === subType2 || subType2 === null));
+      return categoryMatch && typeMatch && subTypeMatch;
+    });
 
-        return categoryMatch && typeMatch && subTypeMatch;
-      });
+    const foodCombinations = knapsackBacktrackingOptimized(filteredMeals, budget, selectedCategories);
 
-      const foodCombinations = knapsackBacktrackingOptimized(filteredMeals, budget, selectedCategories);
+    const maxResults = 5;
+    const limitedResults = foodCombinations.slice(0, maxResults);
 
-      const maxResults = 5;
-      const limitedResults = foodCombinations.slice(0, maxResults);
+    const numberedCombinations = limitedResults.map((combination, index) => {
+      const totalAmount = combination.reduce((sum, item) => sum + item.amount, 0);
+      return {
+        [`Combination ${index + 1}`]: combination,
+        "Total Amount": `P${totalAmount.toFixed(2)}`
+      };
+    });
 
-      const numberedCombinations = limitedResults.map((combination, index) => {
-        const totalAmount = combination.reduce((sum, item) => sum + item.amount, 0);
-        return {
-          [`Combination ${index + 1}`]: combination,
-          "Total Amount": `P${totalAmount.toFixed(2)}`
-        };
-      });
-
-      res.json({ 'Food combinations': numberedCombinations });
+    res.json({ 'Food combinations': numberedCombinations });
   });
 });
 
