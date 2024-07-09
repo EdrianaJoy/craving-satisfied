@@ -35,7 +35,66 @@
   <!--Results-->
   <section id="result" class="result">
     <div class="container">
-      <h2>Results</h2>
+      <h2>Meal Combinations</h2>
+
+      <div id="combinations"></div>
+
+      <script>
+        // Retrieve the data from session storage
+        const data = JSON.parse(sessionStorage.getItem('mealsData'));
+
+        // Get the combinations div
+        const combinationsDiv = document.getElementById('combinations');
+
+        data["Food combinations"].forEach((combination, index) => {
+          // Create a heading for each combination
+          const heading = document.createElement('h2');
+          heading.textContent = `Combination ${index + 1}`;
+          combinationsDiv.appendChild(heading);
+
+          // Create a table for each combination
+          const table = document.createElement('table');
+          const thead = document.createElement('thead');
+          thead.innerHTML = `
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Amount</th>
+                      <th>Type ID</th>
+                      <th>Sub Type ID</th>
+                      <th>Category</th>
+                  </tr>
+              `;
+          table.appendChild(thead);
+
+          const tbody = document.createElement('tbody');
+          Object.keys(combination).forEach(key => {
+            if (key.startsWith('Combination')) {
+              combination[key].forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                              <td>${item.id}</td>
+                              <td>${item.name}</td>
+                              <td>${item.amount}</td>
+                              <td>${item.type_id}</td>
+                              <td>${item.sub_type_id}</td>
+                              <td>${item.category}</td>
+                          `;
+                tbody.appendChild(row);
+              });
+            } else {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                          <td colspan="6"><strong>Total Amount:</strong> ${combination[key]}</td>
+                      `;
+              tbody.appendChild(row);
+            }
+          });
+
+          table.appendChild(tbody);
+          combinationsDiv.appendChild(table);
+        });
+      </script>
 
 
       <div class="button-container">
@@ -48,7 +107,7 @@
   <!--FOOTER-->
   <%- include('partials/footer.ejs') %>
 
-  <script src="assets\js\main.js"></script>
+  <script src="javascripts/main.js"></script>
 </body>
 
 </html>
