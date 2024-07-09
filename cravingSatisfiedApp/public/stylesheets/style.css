@@ -594,46 +594,5 @@ h6 {
     margin-left: 10px; 
 }
 
-/* Heading */
-#combinationsDiv h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: var(--c-brand-light);
-}
-
-/* Table style */
-#combinationsDiv table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: var(--c-body);
-}
-
-/* Th */
-#combinationsDiv th {
-    background-color: var(--c-body);
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    color: var(--c-fw);
-}
-
-/* Table cell */
-#combinationsDiv td {
-    padding: 10px;
-    text-align: center;
-}
-
-
-/* td */
-#combinationsDiv tbody td{
-    background-color:var(--c-body);
-    font-weight: bold;
-    padding: 12px;
-    text-align: center;
-    color: var(--c-fw);
-}
 
   
