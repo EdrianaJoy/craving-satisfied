@@ -57,11 +57,11 @@ router.get('/get-sub-categories', function (req, res, next) {
 
 function getCategoryTableName(category) {
   switch (category) {
-    case 'ricemeals':
+    case 'ricemeal':
       return 'RiceMealType';
-    case 'beverages':
+    case 'beverage':
       return 'BeverageType';
-    case 'snacks':
+    case 'snack':
       return 'SnackType';
     default:
       throw new Error(`Unknown category: ${category}`);
@@ -70,11 +70,11 @@ function getCategoryTableName(category) {
 
 function getSubCategoryTableName(category) {
   switch (category) {
-    case 'ricemeals':
+    case 'ricemeal':
       return 'RiceMealSubType';
-    case 'beverages':
+    case 'beverage':
       return 'BeverageSubType';
-    case 'snacks':
+    case 'snack':
       return 'SnackSubType';
     default:
       throw new Error(`Unknown category: ${category}`);
@@ -83,11 +83,11 @@ function getSubCategoryTableName(category) {
 
 function getCategoryType(category) {
   switch (category) {
-    case 'ricemeals':
+    case 'ricemeal':
       return 'rice_meal_type_id';
-    case 'beverages':
+    case 'beverage':
       return 'beverage_type_id';
-    case 'snacks':
+    case 'snack':
       return 'snack_type_id';
     default:
       throw new Error(`Unknown category: ${category}`);
@@ -218,9 +218,11 @@ router.post('/get-meals', (req, res) => {
 
     const filteredMeals = mealOptions.filter(option => {
       const categoryMatch = selectedCategories.includes(option.category);
-      const typeMatch = (option.category === categories[0] && option.type_id === type1) || (option.category === categories[1] && option.type_id === type2);
-      const subTypeMatch = (option.category === categories[0] && option.sub_type_id === subType1) || (option.category === categories[1] && (option.sub_type_id === subType2 || subType2 === null));
 
+      const typeMatch = (option.category === selectedCategories[0] && option.type_id === type1) || (option.category === selectedCategories[1] && option.type_id === type2);
+      const subTypeMatch = (option.category === selectedCategories[0] && option.sub_type_id === subType1) || (option.category === selectedCategories[1] && (option.sub_type_id === subType2 || subType2 === null));
+
+      console.log(categoryMatch, ' ', typeMatch, ' ', subTypeMatch);
       return categoryMatch && typeMatch && subTypeMatch;
     });
 
