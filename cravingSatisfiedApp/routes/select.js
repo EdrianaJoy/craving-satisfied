@@ -185,44 +185,17 @@ router.post('/get-meals', (req, res) => {
       return res.status(500).json({ error: 'Error fetching data from the database' });
     }
 
-    console.log(categories);
-
     const selectedCategories = categories.map(category => category.categoryName)
     const type1 = categories[0].type;
     const subType1 = categories[0].subType;
     const type2 = categories[1].type;
     const subType2 = categories[1].subType;
 
-    console.log(type1)
-    console.log(subType1)
-    console.log(type2)
-    console.log(subType2)
-
-    fs.writeFile('selectedCategories.json', selectedCategories, 'utf8', (err) => {
-      if (err) {
-        console.error('An error occurred while writing the file:', err);
-        return;
-      }
-      console.log('File has been saved successfully!');
-    });
-
-    const jsonContent2 = JSON.stringify(mealOptions)
-
-    fs.writeFile('mealOptions.json', jsonContent2, 'utf8', (err) => {
-      if (err) {
-        console.error('An error occurred while writing the file:', err);
-        return;
-      }
-      console.log('File has been saved successfully!');
-    });
-
     const filteredMeals = mealOptions.filter(option => {
       const categoryMatch = selectedCategories.includes(option.category);
 
       const typeMatch = (option.category === selectedCategories[0] && option.type_id === type1) || (option.category === selectedCategories[1] && option.type_id === type2);
       const subTypeMatch = (option.category === selectedCategories[0] && option.sub_type_id === subType1) || (option.category === selectedCategories[1] && (option.sub_type_id === subType2 || subType2 === null));
-
-      console.log(categoryMatch, ' ', typeMatch, ' ', subTypeMatch);
       return categoryMatch && typeMatch && subTypeMatch;
     });
 

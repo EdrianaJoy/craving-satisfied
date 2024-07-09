@@ -13,13 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.id;
-            console.log('category: ' + category)
             if (selectedCategories.has(category)) {
                 selectedCategories.delete(category);
                 button.classList.remove('btn-selected');
             } else {
                 if (selectedCategories.size < 2) {
-                    console.log(selectedCategories.size)
                     selectedCategories.set(category, null);
                     button.classList.add('btn-selected');
                 } else {
@@ -152,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleFormSubmission() {
-        console.log('Form submitted!');
         const budget = document.getElementById('budget').value;
 
         const categories = [];
@@ -160,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             categories.push(value);
         });
 
-        console.log('selectedCategories', categories);
         const form = {
             budget: budget,
             categories: categories
