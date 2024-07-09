@@ -129,8 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 subType: parseInt(button.id)
                             }
                             selectedCategories.set(category, categoryForm);
-                            console.log('damassh', selectedCategories);
-
                         };
                         subcategoryArea.appendChild(button);
                     })
@@ -172,12 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)
-        }).then(data => {
-            console.log(data)
-        }).catch(error => {
-            console.error('Error', error)
-            alert(error);
-        });
+        })
+            .then(response => response.json())
+            .then(data => {
+                sessionStorage.setItem('mealsData', JSON.stringify(data));
+                
+                // Redirect to the results page
+                window.location.href = '/results';
+            })
+            .catch(error => {
+                console.error('Error', error);
+                alert(error);
+            });
 
     }
 });
