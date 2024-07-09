@@ -557,66 +557,15 @@ h6 {
     text-align: justify;
 }
 
-/*RADIO BUTTON*/
-input[type="radio"] {
-    display: none;
-  }
-  
-  /* Style for the custom radio button */
-  input[type="radio"] + label {
-    position: relative;
-    padding-left: 30px; /* Adjust as needed */
-    cursor: pointer;
-    display: inline-block;
-    line-height: 1.5;
-  }
-  
-  /* Outer circle of the custom radio button */
-  input[type="radio"] + label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 20px; 
-    height: 20px; /* Diameter of the outer circle */
-    border: 3px solid #ffffff; /* Color and thickness of the outer circle */
-    border-radius: 50%; /* Ensure it's circular */
-  }
-  input[type="radio"]:checked + label:after {
-    content: '';
-    position: absolute;
-    left: 5px; /* Adjust the position of the inner dot */
-    top: 5px; /* Adjust the position of the inner dot */
-    width: 10px; /* Diameter of the inner dot */
-    height: 10px; /* Diameter of the inner dot */
-    background-color: #dae958; /* Color of the inner dot */
-    border-radius: 50%; 
-  }
-  input[type="radio"]:checked + label {
-    font-weight: bold; 
-    color: #dbcb3a; 
 
-  }
 
-/*RESULT PAGE*/
-  .result {
-    background-image:  url('../images/Group 7.png'); 
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: center ;
-    height: fit-content;
-    min-height: 87vh; 
-    position: relative; 
-
-}
-
-.result h2{
+.result h1{
     margin: 0px;
     padding-top: 20px ;
     font-family: var(--font-base);
     font-style: normal;
     color: var(--c-fw);
-    font-size: 50px;
+    font-size: 40px;
 
 }
 
@@ -634,6 +583,48 @@ input[type="radio"] {
 
 .button-container button {
     margin-left: 10px; 
+}
+
+/* Heading */
+#combinationsDiv h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: var(--c-brand-light);
+}
+
+/* Table style */
+#combinationsDiv table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: var(--c-body);
+}
+
+/* Th */
+#combinationsDiv th {
+    background-color: var(--c-body);
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--c-fw);
+}
+
+/* Table cell */
+#combinationsDiv td {
+    padding: 10px;
+    text-align: center;
+}
+
+
+/* td */
+#combinationsDiv tbody td{
+    background-color:var(--c-body);
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    color: var(--c-fw);
 }
 
 
