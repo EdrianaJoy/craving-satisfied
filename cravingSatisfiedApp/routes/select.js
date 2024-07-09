@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const connection = require('./db');
+const fs = require('fs');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -196,6 +197,24 @@ router.post('/get-meals', (req, res) => {
     console.log(subType1)
     console.log(type2)
     console.log(subType2)
+
+    fs.writeFile('selectedCategories.json', selectedCategories, 'utf8', (err) => {
+      if (err) {
+          console.error('An error occurred while writing the file:', err);
+          return;
+      }
+      console.log('File has been saved successfully!');
+  });
+
+  const jsonContent2 = JSON.stringify(mealOptions)
+
+      fs.writeFile('mealOptions.json', jsonContent2, 'utf8', (err) => {
+        if (err) {
+            console.error('An error occurred while writing the file:', err);
+            return;
+        }
+        console.log('File has been saved successfully!');
+    });
 
     const filteredMeals = mealOptions.filter(option => {
       const categoryMatch = selectedCategories.includes(option.category);
