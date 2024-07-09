@@ -601,20 +601,22 @@ h6 {
 .button-container button {
     margin-left: 10px; 
 }
+
 #combinations {
     margin-top: 20px;
-    display: flex;
+    display: block;
     justify-content: center; 
 }
 #combinations th {
-    color: var(--c-body);
+    color: var(--c-brand-second);
     padding: 12px;
     text-align: center;
 }
 #combinations td {
     padding: 12px;
-    color: var(--c-body);
+    color: var(--c-fw);
     text-align: center;
+    font-family: var(--font-secondary);
 }
 
 
