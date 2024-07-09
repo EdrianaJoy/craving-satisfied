@@ -558,13 +558,13 @@ h6 {
 
 
 
-.result h2{
+.result h1{
     margin: 0px;
     padding-top: 20px ;
     font-family: var(--font-base);
     font-style: normal;
     color: var(--c-fw);
-    font-size: 50px;
+    font-size: 40px;
 
 }
 
