@@ -567,8 +567,16 @@ h6 {
     position: relative; 
 
 }
+.result h1{
+    margin: 0px;
+    padding-top: 20px ;
+    font-family: var(--font-base);
+    font-style: normal;
+    color: var(--c-fw);
+    font-size: 40px;
 
-.result h2{
+}
+#combinations h2{
     margin: 0px;
     padding-top: 20px ;
     font-family: var(--font-base);
@@ -576,6 +584,11 @@ h6 {
     color: var(--c-fw);
     font-size: 20px;
 
+}
+
+.result-container {
+    position: relative; 
+    text-align: center;
 }
 
 .button-container {
@@ -588,6 +601,24 @@ h6 {
 .button-container button {
     margin-left: 10px; 
 }
+#combinations {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; 
+}
+#combinations th {
+    color: var(--c-body);
+    padding: 12px;
+    text-align: center;
+}
+#combinations td {
+    padding: 12px;
+    color: var(--c-body);
+    text-align: center;
+}
 
 
 
+
+
+  
