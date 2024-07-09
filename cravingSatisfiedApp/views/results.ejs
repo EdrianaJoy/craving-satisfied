@@ -57,11 +57,8 @@
           const thead = document.createElement('thead');
           thead.innerHTML = `
                   <tr>
-                      <th>ID</th>
                       <th>Name</th>
                       <th>Amount</th>
-                      <th>Type ID</th>
-                      <th>Sub Type ID</th>
                       <th>Category</th>
                   </tr>
               `;
@@ -73,11 +70,8 @@
               combination[key].forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                              <td>${item.id}</td>
                               <td>${item.name}</td>
                               <td>${item.amount}</td>
-                              <td>${item.type_id}</td>
-                              <td>${item.sub_type_id}</td>
                               <td>${item.category}</td>
                           `;
                 tbody.appendChild(row);
