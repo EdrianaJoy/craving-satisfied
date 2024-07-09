@@ -200,20 +200,20 @@ router.post('/get-meals', (req, res) => {
 
     fs.writeFile('selectedCategories.json', selectedCategories, 'utf8', (err) => {
       if (err) {
-          console.error('An error occurred while writing the file:', err);
-          return;
+        console.error('An error occurred while writing the file:', err);
+        return;
       }
       console.log('File has been saved successfully!');
-  });
+    });
 
-  const jsonContent2 = JSON.stringify(mealOptions)
+    const jsonContent2 = JSON.stringify(mealOptions)
 
-      fs.writeFile('mealOptions.json', jsonContent2, 'utf8', (err) => {
-        if (err) {
-            console.error('An error occurred while writing the file:', err);
-            return;
-        }
-        console.log('File has been saved successfully!');
+    fs.writeFile('mealOptions.json', jsonContent2, 'utf8', (err) => {
+      if (err) {
+        console.error('An error occurred while writing the file:', err);
+        return;
+      }
+      console.log('File has been saved successfully!');
     });
 
     const filteredMeals = mealOptions.filter(option => {
