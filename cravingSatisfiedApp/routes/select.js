@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const connection = require('./db');
-const fs = require('fs');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -40,7 +39,6 @@ router.get('/get-sub-categories', function (req, res, next) {
 
     debugger;
     const query = `SELECT * FROM ${tableName} WHERE ${categoryTypeId} = ${typeId}`;
-    console.log(`query: ${query}`)
     connection.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching data:', err);
@@ -122,9 +120,9 @@ function knapsackBacktrackingOptimized(meals, budget, categories, currentSelecti
 
 const fetchMeals = (callback) => {
   const queries = {
-    ricemeal: 'SELECT id, name, amount, rice_meal_type_id AS type_id, rice_meal_sub_type_id AS sub_type_id, "ricemeal" AS category FROM ricemeal',
-    beverage: 'SELECT id, name, amount, beverage_type_id AS type_id, beverage_sub_type_id AS sub_type_id, "beverage" AS category FROM beverage',
-    snack: 'SELECT id, name, amount, snack_type_id AS type_id, snack_sub_type_id AS sub_type_id, "snack" AS category FROM snack'
+    ricemeal: 'SELECT id, name, amount, rice_meal_type_id AS type_id, rice_meal_sub_type_id AS sub_type_id, "ricemeal" AS category, stall_number FROM ricemeal',
+    beverage: 'SELECT id, name, amount, beverage_type_id AS type_id, beverage_sub_type_id AS sub_type_id, "beverage" AS category, stall_number FROM beverage',
+    snack: 'SELECT id, name, amount, snack_type_id AS type_id, snack_sub_type_id AS sub_type_id, "snack" AS category, stall_number FROM snack'
   };
 
   const results = {};
